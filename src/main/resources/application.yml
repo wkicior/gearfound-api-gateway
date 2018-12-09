@@ -1,0 +1,12 @@
+zuul:
+  prefix: '/api'
+  routes:
+    items-service:
+      path: '/items/**'
+      url: 'http://localhost:8100'
+
+security:
+  user:
+  oauth2:
+    resource:
+      userInfoUri: http://localhost:8090/user
