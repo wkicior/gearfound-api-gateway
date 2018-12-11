@@ -1,0 +1,9 @@
+security:
+  oauth2:
+    resource:
+      userInfoUri: http://gearfound-authorization-service:8090/user
+
+zuul:
+  routes:
+    items-service:
+      url: http://gearfound-item-service:8100

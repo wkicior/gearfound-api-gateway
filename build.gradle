@@ -4,9 +4,13 @@ buildscript {
 	}
 	repositories {
 		mavenCentral()
+		maven {
+			url("https://plugins.gradle.org/m2/")
+		}
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.20.1")
 	}
 }
 
@@ -14,8 +18,10 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.palantir.docker'
 
-group = 'com.gearfound.apigateway'
+
+group = 'com.gearfound'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
 
@@ -44,4 +50,16 @@ dependencyManagement {
 	imports {
 		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
 	}
+}
+
+docker {
+	name "${project.group}/${bootJar.baseName}"
+	files "build/libs/${bootJar.baseName}-${version}.jar"
+	buildArgs([JAR_FILE: "${bootJar.baseName}-${version}.jar"])
+}
+
+task dockerBuild {
+	dependsOn 'build'
+	dependsOn 'docker'
+	tasks.findByName('docker').mustRunAfter 'build'
 }

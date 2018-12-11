@@ -1,0 +1,9 @@
+security:
+  oauth2:
+    resource:
+      userInfoUri: http://localhost:8090/user
+
+zuul:
+  routes:
+    items-service:
+      url: http://localhost:8100
