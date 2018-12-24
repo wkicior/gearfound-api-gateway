@@ -8,4 +8,4 @@ zuul:
     items-service:
       url: http://gearfound-item-service:8100
     authorization-service:
-      url: http://authorization-service:8090/oauth
+      url: http://gearfound-authorization-service:8090/oauth

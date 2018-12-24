@@ -12,11 +12,11 @@ import java.util.Base64;
 public class Oauth2BasicAuthFilter extends ZuulFilter {
 
     @NotNull
-    @Value("${zuul.routes.authorization-service.oauth.clientId}")
+    @Value("${zuul.routes.authorization-service.oauth.client-id}")
     private String clientId;
 
     @NotNull
-    @Value("${zuul.routes.authorization-service.oauth.secret}")
+    @Value("${zuul.routes.authorization-service.oauth.client-secret}")
     private String secret;
 
     @Override
