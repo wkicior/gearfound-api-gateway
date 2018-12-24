@@ -8,3 +8,9 @@ zuul:
   routes:
     items-service:
       path: '/items/**'
+    authorization-service:
+      sensitiveHeaders: Cookie,Set-Cookie
+      path: '/oauth/**'
+      oauth:
+        clientId: 'crmClient1'
+        secret: 'crmSuperSecret'

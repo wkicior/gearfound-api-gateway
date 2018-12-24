@@ -1,9 +1,14 @@
+server:
+  port: 8081
+
 security:
   oauth2:
     resource:
-      userInfoUri: http://localhost:8090/user
+      userInfoUri: http://localhost:8091/user
 
 zuul:
   routes:
     items-service:
       url: http://localhost:8100
+    authorization-service:
+      url: http://localhost:8091/oauth
