@@ -8,6 +8,7 @@ zuul:
   routes:
     items-service:
       path: '/items/**'
+      sensitiveHeaders: Cookie,Set-Cookie
     authorization-service:
       sensitiveHeaders: Cookie,Set-Cookie
       path: '/oauth/**'

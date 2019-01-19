@@ -12,12 +12,12 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        //-- define URL patterns to enable OAuth2 security
         http.
                 authorizeRequests()
                 .antMatchers("/api/oauth/**").permitAll()
                 .antMatchers("/api/items/lost**").permitAll()
-                .antMatchers("/api/items/found**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers("/api/items/found**").permitAll()
+//                .antMatchers("/api/items/found**").access("hasRole('ADMIN') or hasRole('USER')")
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
     }
 }
