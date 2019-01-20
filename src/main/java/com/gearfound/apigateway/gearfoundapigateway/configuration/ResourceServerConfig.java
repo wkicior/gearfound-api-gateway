@@ -1,10 +1,16 @@
 package com.gearfound.apigateway.gearfoundapigateway.configuration;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.ResourceServerConfigurerAdapter;
 import org.springframework.security.oauth2.provider.error.OAuth2AccessDeniedHandler;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableResourceServer
@@ -15,9 +21,22 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.
                 authorizeRequests()
                 .antMatchers("/api/oauth/**").permitAll()
-                .antMatchers("/api/items/lost**").permitAll()
-                .antMatchers("/api/items/found**").permitAll()
-//                .antMatchers("/api/items/found**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers(HttpMethod.GET, "/api/items/lost**").permitAll()
+                .antMatchers(HttpMethod.GET, "/api/items/found**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/items/lost**").access("hasRole('ADMIN') or hasRole('USER')")
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+        CorsConfigurationSource source = corsConfigurationSource();
+        http.addFilterBefore(new CorsFilter(source), ChannelProcessingFilter.class);
+    }
+
+    private CorsConfigurationSource corsConfigurationSource() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration config = new CorsConfiguration();
+        config.addAllowedOrigin("*");
+        config.addAllowedHeader("*");
+        config.addAllowedMethod("*");
+        //more config
+        source.registerCorsConfiguration("/**", config);
+        return source;
     }
 }
