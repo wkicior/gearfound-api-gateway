@@ -18,13 +18,16 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-        http.
-                authorizeRequests()
+        http
+            .authorizeRequests()
                 .antMatchers("/api/oauth/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/items/lost**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/items/found**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/items/lost**").access("hasRole('ADMIN') or hasRole('USER')")
-                .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());
+                .and()
+            .exceptionHandling()
+            .accessDeniedHandler(new OAuth2AccessDeniedHandler());
+
         CorsConfigurationSource source = corsConfigurationSource();
         http.addFilterBefore(new CorsFilter(source), ChannelProcessingFilter.class);
     }
