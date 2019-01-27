@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AddUserIdFilter extends ZuulFilter {
-    private static final String USER_HEADER = "X-User-Id";
+    private static final String USER_HEADER = "User-Id";
 
     @Override
     public int filterOrder() {
