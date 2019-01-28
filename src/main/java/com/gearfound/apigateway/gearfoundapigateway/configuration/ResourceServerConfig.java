@@ -24,6 +24,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers(HttpMethod.GET, "/api/items/lost**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/items/found**").permitAll()
                 .antMatchers(HttpMethod.POST, "/api/items/lost**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers(HttpMethod.POST, "/api/items/found**").access("hasRole('ADMIN') or hasRole('USER')")
                 .and()
             .exceptionHandling()
             .accessDeniedHandler(new OAuth2AccessDeniedHandler());

@@ -3,6 +3,7 @@ package com.gearfound.apigateway.gearfoundapigateway.auth;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 import org.springframework.cloud.netflix.zuul.filters.support.FilterConstants;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -25,7 +26,8 @@ public class AddUserIdFilter extends ZuulFilter {
     @Override
     public boolean shouldFilter() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return authentication.isAuthenticated();
+        return authentication.isAuthenticated() && !(SecurityContextHolder.getContext().getAuthentication()
+                instanceof AnonymousAuthenticationToken);
     }
 
     @Override
