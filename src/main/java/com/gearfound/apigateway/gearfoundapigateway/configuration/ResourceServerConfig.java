@@ -15,7 +15,6 @@ import org.springframework.web.filter.CorsFilter;
 @Configuration
 @EnableResourceServer
 public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
-
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
@@ -23,8 +22,10 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
                 .antMatchers("/api/oauth/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/items/lost**").permitAll()
                 .antMatchers(HttpMethod.GET, "/api/items/found**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/items/lost**").access("hasRole('ADMIN') or hasRole('USER')")
-                .antMatchers(HttpMethod.POST, "/api/items/found**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers(HttpMethod.POST, "/api/items/user/lost**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers(HttpMethod.POST, "/api/items/user/found**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers(HttpMethod.GET, "/api/items/user/lost**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers(HttpMethod.GET, "/api/items/user/found**").access("hasRole('ADMIN') or hasRole('USER')")
                 .and()
             .exceptionHandling()
             .accessDeniedHandler(new OAuth2AccessDeniedHandler());
