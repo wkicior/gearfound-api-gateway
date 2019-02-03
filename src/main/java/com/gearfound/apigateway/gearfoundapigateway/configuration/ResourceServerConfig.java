@@ -20,12 +20,14 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http
             .authorizeRequests()
                 .antMatchers("/api/oauth/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/items/lost**").permitAll()
-                .antMatchers(HttpMethod.GET, "/api/items/found**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/items/user/lost**").access("hasRole('ADMIN') or hasRole('USER')")
-                .antMatchers(HttpMethod.POST, "/api/items/user/found**").access("hasRole('ADMIN') or hasRole('USER')")
-                .antMatchers(HttpMethod.GET, "/api/items/user/lost**").access("hasRole('ADMIN') or hasRole('USER')")
-                .antMatchers(HttpMethod.GET, "/api/items/user/found**").access("hasRole('ADMIN') or hasRole('USER')")
+
+                .antMatchers(HttpMethod.GET, "/api/items/lost-items**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/items/lost-items**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers(HttpMethod.GET, "/api/items/lost-items?registrantId=**").access("hasRole('ADMIN') or hasRole('USER')")
+
+                .antMatchers(HttpMethod.GET, "/api/items/found-items**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/items/found-items**").access("hasRole('ADMIN') or hasRole('USER')")
+                .antMatchers(HttpMethod.GET, "/api/items/found-items?registrantId**").access("hasRole('ADMIN') or hasRole('USER')")
                 .and()
             .exceptionHandling()
             .accessDeniedHandler(new OAuth2AccessDeniedHandler());
